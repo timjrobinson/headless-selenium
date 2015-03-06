@@ -5,3 +5,8 @@ Script to set up a headless chrome + selenium client on ubuntu.
 ```
 sudo ./run.sh
 ```
+
+## Flags
+```
+--port - Chose what port selenium will run on
+```

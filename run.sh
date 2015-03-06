@@ -3,8 +3,23 @@ set -e
 set -x
 
 SELENIUM_VERSION="2.45.0"
+SELENIUM_PORT="4444"
 CHROME_VERSION=$(curl http://chromedriver.storage.googleapis.com/LATEST_RELEASE)
 
+while test $# -gt 0; do
+  case "$1" in
+    -p|-port|--port)
+      shift
+      SELENIUM_PORT=$1
+      shift
+      ;;
+    *)
+      break
+      ;;
+  esac
+done
+                  
+                
 if [[ $EUID -ne 0 ]]; then
    echo "This script must be run as root" 1>&2
    exit 1
@@ -53,4 +68,4 @@ google-chrome --remote-debugging-port=9222 &
 
 echo "Starting Selenium ..."
 cd /usr/local/bin
-nohup java -jar ./selenium-server-standalone-${SELENIUM_VERSION}.jar &
+nohup java -jar ./selenium-server-standalone-${SELENIUM_VERSION}.jar -port $SELENIUM_PORT &
